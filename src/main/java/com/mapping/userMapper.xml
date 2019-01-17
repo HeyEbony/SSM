@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isoft.mapping.User">
+    <select id="login" parameterMap="map" resultType="map">
+        select * from flightinf where uname=#{uname} and upwd=#{password}
+    </select>
+    <select id="findFlightInfoById" resultType="map">
+        select * from flightinfo where flightid=#{id}
+    </select>
+</mapper>

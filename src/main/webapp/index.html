@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>云盘登录</title>
+    <link rel="stylesheet" href="js/node_modules/layui-src/dist/css/layui.css">
+    <script type="text/javascript" src="js/node_modules/layui-src/dist/layui.all.js"></script>
+    <script type="text/javascript" src="js/node_modules/jquery/dist/jquery.js"></script>
+    <script>
+        function loginValidate () {
+            var uname=$("#uname").var();
+            if(uname.length==0){
+               layui.tips("用户名不能为空！","#uname",{
+                   tips:[2,"#000000"],
+                   time:2000
+               });
+               return;
+            }
+            var uname=$("#upwd").var();
+            if(uname.length==0){
+                layui.tips("密码不能为空！","#upwd",{
+                    tips:[2,"#000000"],
+                    time:2000
+                });
+                return;
+            }
+
+
+            var regx=/^[A-Za-z0-9.]{6-10}/
+            if (!regx.test(upwd)){
+                lay.tips("请输入6-10位密码！","#upwd",{
+                    tips:[2,"#000000"],
+                    time:2000
+                });
+                return;
+            }
+
+
+            if (upwd.length<6||upwd.length>10){
+                lay.tips("请输入6-10位密码！","#upwd",{
+                    tips:[2,"#000000"],
+                    time:2000
+                });
+                return;
+            }
+            console.info($("#loginForm").serialize());
+            $.ajax({
+                url:"user/longin.do",
+                method:"post",
+                data:$("#loginForm").serialize(),
+                success:function (result) {
+                    if (result) {
+                        sessionStorage.setItem("uname",uname);
+                        window.location.href="admin.html";
+                    }
+
+                },
+                error:function () {
+                    layer.alert("链接服务器未成功！",{icon:6});
+
+
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<div class="layui-fluid" style="width:50%" align="center">
+
+        <div class="layui-card">
+            <div class="layui-card-header">网络云盘</div>
+            <div class="layui-card-body">
+                <div class="layui-tab layui-tab-brief">
+                    <!--无序列表-->
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">登陆</li>
+                        <li>注册</li>
+                    </ul>
+
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+<!--登陆页面-->
+                            <form id="loginForm" class="layui-form" action="">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">用户名</label>
+                                    <div class="layui-input-block">
+                                        <input id="uname" type="text" class="layui-input" placeholder="请输入用户名">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+                                    <div class="layui-input-block">
+                                        <input id="upwd" type="password" class="layui-input" placeholder="请输入密码">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">验证码</label>
+                                    <div class="layui-input-inline">
+                                        <input id="vcode" type="text" class="layui-input" placeholder="请输入右侧字母数字组合">
+                                    </div>
+                                    <img src="" alt="验证码">
+                                </div>
+                                <div class="layui-form-item" align="center">
+                                    <a href="javascript:loginValidation()" class="layui-btn layui-btn-lg ">登陆</a>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="layui-tab-item">注册页面</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+</div>
+</body>
+</html>
